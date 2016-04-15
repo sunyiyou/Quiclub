@@ -22,6 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
 import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,17 +47,16 @@ public class TaskController{
 	   if (user_id == null) {
 		   user_id = (Integer)request.getSession().getAttribute("user_id");
 		   if (user_id == null) {
-			   user_id = 3;
+			   throw new RuntimeException("user_id不存在");
 		   }
 	   }
 	   if (club_id == null) {
 		   club_id = (Integer)request.getSession().getAttribute("club_id");
 		   if (club_id == null) {
-			   club_id = 1;
+			   throw new RuntimeException("club_id不存在");
 		   }
 	   }
    }
-   
    /**
     * @author sunyiyou
     * @param request
@@ -137,7 +137,7 @@ public class TaskController{
     */
    @RequestMapping(value="scheduel.do",method={RequestMethod.GET})
    public String scheduel(HttpServletRequest request){
-	   return "scheduel";
+	   return "jsp/scheduel";
    }
    /**
     * @author sunyiyou
@@ -148,7 +148,7 @@ public class TaskController{
    public String distributeactivity(HttpServletRequest request){
 	   loadIds(request);
 	   request.setAttribute("clubMembership", clubService.getMembershipByClubId(club_id));
-	   return "distributeactivity";
+	   return "jsp/distributeactivity";
    }
    /**
     * @author sunyiyou
@@ -159,7 +159,7 @@ public class TaskController{
    public String editactivity(HttpServletRequest request){
 	   loadIds(request);
 	   
-	   return "editactivity";
+	   return "jsp/editactivity";
    }
 
 	

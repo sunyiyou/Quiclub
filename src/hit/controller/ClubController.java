@@ -79,7 +79,7 @@ public class ClubController{
 	   SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 	   request.setAttribute("setupdate", simpleDateFormat.format(setuptimeDate));
 	   request.getSession().setAttribute("club_id", 1);
-		return "clubmessage";		
+		return "jsp/clubmessage";		
 	}
 	/**
 	 * @author sunyiyou
@@ -96,7 +96,7 @@ public class ClubController{
 		List<ClubMember> clubMembership = clubService.getMembershipByClubId((Integer)request.getSession().getAttribute("club_id"));
 		request.setAttribute("clubMembership", clubMembership);
 		
-		return "clubmembership";
+		return "jsp/clubmembership";
 	}
 	/**
 	 * @author sunyiyou
@@ -146,7 +146,7 @@ public class ClubController{
 		List<Role> roles = clubService.getRoles(club_id);
 		request.getSession().setAttribute("menus", menus);
 		request.setAttribute("roles", roles);
-		return "/jsp/adjustclubrole";
+		return "jsp/adjustclubrole";
 	}
 	/**
 	 * @author sunyiyou
@@ -180,7 +180,7 @@ public class ClubController{
 			roleprivileges.add(new RolePrivilege(menu_id,max_id));
 		}
 		clubService.addRolePrivileges(roleprivileges);
-		return "adjustclubrole";
+		return "jsp/adjustclubrole";
 	}
 
 	/**
@@ -237,7 +237,7 @@ public class ClubController{
 		List<Role> roles = clubService.getRoles(club_id);
 		request.getSession().setAttribute("menus", menus);
 		request.setAttribute("roles", roles);
-		return "/jsp/adjustclubrole";
+		return "jsp/adjustclubrole";
 	}
 	/**
 	 * @author sunyiyou
@@ -252,7 +252,7 @@ public class ClubController{
 		clubService.deleteRole(role, (Integer)request.getSession().getAttribute("club_id"));
 		List<Role> roles = clubService.getRoles((Integer)request.getSession().getAttribute("club_id"));
 		request.setAttribute("roles", roles);
-		return "adjustclubrole";
+		return "jsp/adjustclubrole";
 	}
 	
 	/**
@@ -271,7 +271,7 @@ public class ClubController{
 		request.setAttribute("roles",roles);
 		List<ClubMember> clubmembers = clubService.getClubMembership(club_id);
 		request.setAttribute("clubmembers", clubmembers);
-		return "/jsp/delegateclubrole";
+		return "jsp/delegateclubrole";
 	}
 	/**
 	 * @author sunyiyou
@@ -292,7 +292,7 @@ public class ClubController{
 		request.setAttribute("roles",roles);
 		List<ClubMember> clubmembers = clubService.getClubMembership(club_id);
 		request.setAttribute("clubmembers", clubmembers);
-		return "/jsp/delegateclubrole";
+		return "jsp/delegateclubrole";
 	}
 
 	
@@ -316,7 +316,7 @@ public class ClubController{
 		//show requests
 		List<ClubMemberRequest> requests = clubService.getClubMemberRequest(club_id);
 		request.setAttribute("requests", requests);
-		return "/jsp/adjustclubmember";
+		return "jsp/adjustclubmember";
 	}
 	/**
 	 * @author sunyiyou
@@ -342,11 +342,11 @@ public class ClubController{
 		//show requests
 		List<ClubMemberRequest> requests = clubService.getClubMemberRequest(clubId);
 		request.setAttribute("requests", requests);
-		return "/jsp/adjustclubmember" ;
+		return "jsp/adjustclubmember" ;
 	}
 	
 	@RequestMapping(value="addClubMember.do",method={RequestMethod.POST})
-	public String addClubMember(HttpServletRequest request
+	public @ResponseBody String addClubMember(HttpServletRequest request
 			,@RequestParam(defaultValue="0") Integer userId
 			,@RequestParam(defaultValue="0") Integer roleId){
 //		Integer clubId = (Integer)request.getSession().getAttribute("club_id");
@@ -363,7 +363,7 @@ public class ClubController{
 		//show requests
 		List<ClubMemberRequest> requests = clubService.getClubMemberRequest(clubId);
 		request.setAttribute("requests", requests);
-		return "adjustclubmember";
+		return "success";
 	}
 	
 }

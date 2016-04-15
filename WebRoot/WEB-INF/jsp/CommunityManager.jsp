@@ -23,6 +23,8 @@ request.setAttribute("basePath", basePath);
     <link rel="stylesheet" href="css/myEvents.css" type="text/css" />
     <!-- myEvents CSS -->
     <link rel="stylesheet" href="css/my.css" type="text/css" />
+    
+    <script type="text/javascript" src="js/common.js"></script>
 </head>
 
 <body>

@@ -1,4 +1,4 @@
-var basePath = "http://localhost:8080/QuickClub2";
+
 (function (){
 	//异步加载页面
 	//个人信息页面

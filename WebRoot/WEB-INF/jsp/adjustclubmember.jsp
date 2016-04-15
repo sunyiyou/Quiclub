@@ -79,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    type:'POST', 
                    data:data,
                    success: function(data){
-                   		alert('success');
+                   		alert(data);
                    		$(btn).parent().parent().parent().remove();
                    },
                    error: function(data){

@@ -1,3 +1,9 @@
+﻿<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,14 +12,14 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/myEvents.css" type="text/css" />
     <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
-    <script type="text/javascript" src="js/jalendar.js"></script>
+    <script type="text/javascript" src="js/jalendar_write.js"></script>
     <script type="text/javascript">
     $(function () {
         $('#myId3').jalendar();
     });
     </script>
 </head>
-<body min-width="1200px">
+<body>
     <div id="pageInfo">
         <div id="myId3" class="jalendar mid">
         </div> 
@@ -31,17 +37,9 @@
                           成员 <span class="caret"></span>
                        </button>
                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="javascript:void(0)">孙一铀</a></li> 
-                            <li><a href="javascript:void(0)">孙鹏</a></li>  
-                            <li><a href="javascript:void(0)">张旭 </a></li>
-                            <li><a href="javascript:void(0)">黄运智</a></li>
-                            <li><a href="javascript:void(0)">U++</a></li>
-                            <li><a href="javascript:void(0)">U--</a></li>
-                            <li><a href="javascript:void(0)">U**</a></li>
-                            <li><a href="javascript:void(0)">U//</a></li>
-                            <li><a href="javascript:void(0)">U%%</a></li>
-                            <li><a href="javascript:void(0)">HHH</a></li>
-                            <li><a href="javascript:void(0)">666</a></li>
+                       	   <c:forEach items="${clubMembership }" var="clubmember">
+                            <li><a href="javascript:void(0)" id="a_${clubmember.user.userId }">${clubmember.user.username }</a></li> 
+                       	   </c:forEach>
                        </ul>
                     </div>  
                     <div class="well modal-well"></div>
@@ -59,4 +57,3 @@
 </html>
 
                
-                

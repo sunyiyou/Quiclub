@@ -169,7 +169,7 @@ request.setAttribute("basePath", basePath);
                   <div id="user-password">
                     <input type="password" name="password" placeholder="请输入密码">
                     <p></p>
-                    <input type="password" name="password" placeholder="请确认密码">
+                    <input type="password" name="repassword" placeholder="请确认密码">
                   </div>
                   <p></p>
                   <div id="button-group">

@@ -1,4 +1,4 @@
-var basePath = "http://localhost:8080/QuickClub2";
+
 var memberIds = new Array();
 var members = new Array();
 $(function () {    
