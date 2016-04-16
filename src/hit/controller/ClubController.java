@@ -45,17 +45,15 @@ public class ClubController{
    private Integer user_id;
    private Integer club_id;
    private void loadIds(HttpServletRequest request){
+	  
+	   user_id = (Integer)request.getSession().getAttribute("user_id");
 	   if (user_id == null) {
-		   user_id = (Integer)request.getSession().getAttribute("user_id");
-		   if (user_id == null) {
-			   user_id = 3;
-		   }
+		   throw new RuntimeException("user_id不存在");
 	   }
+   
+	   club_id = (Integer)request.getSession().getAttribute("club_id");
 	   if (club_id == null) {
-		   club_id = (Integer)request.getSession().getAttribute("club_id");
-		   if (club_id == null) {
-			   club_id = 1;
-		   }
+		   throw new RuntimeException("user_id不存在");
 	   }
    }
    

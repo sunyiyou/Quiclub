@@ -44,17 +44,13 @@ public class TaskController{
    private Integer user_id;
    private Integer club_id;
    private void loadIds(HttpServletRequest request){
+	   user_id = (Integer)request.getSession().getAttribute("user_id");
 	   if (user_id == null) {
-		   user_id = (Integer)request.getSession().getAttribute("user_id");
-		   if (user_id == null) {
-			   throw new RuntimeException("user_id不存在");
-		   }
+		   throw new RuntimeException("user_id不存在");
 	   }
+	   club_id = (Integer)request.getSession().getAttribute("club_id");
 	   if (club_id == null) {
-		   club_id = (Integer)request.getSession().getAttribute("club_id");
-		   if (club_id == null) {
-			   throw new RuntimeException("club_id不存在");
-		   }
+		   throw new RuntimeException("club_id不存在");
 	   }
    }
    /**
@@ -115,6 +111,7 @@ public class TaskController{
     */
    @RequestMapping(value="getUserEventPerDay.do",method={RequestMethod.GET})
    public @ResponseBody  List<EventVo> getUserEventPerDay(HttpServletRequest request,Integer month_now,Integer day_now){
+	   loadIds(request);
 	   List<EventVo> events = taskService.getUserEvents(month_now, day_now, user_id, club_id);
 	   return events;
    }
@@ -127,6 +124,7 @@ public class TaskController{
     */
    @RequestMapping(value="getAdminTaskPerDay.do",method={RequestMethod.GET})
    public @ResponseBody  List<EventVo> getAdminTaskPerDay(HttpServletRequest request,Integer month_now,String day_now){
+	   loadIds(request);
 	   List<EventVo> events = taskService.getAdminEvents(month_now, Integer.parseInt(day_now), user_id, club_id);
 	   return events;
    }

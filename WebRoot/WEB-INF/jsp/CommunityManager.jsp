@@ -70,7 +70,7 @@ request.setAttribute("basePath", basePath);
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="<%=path%>/MyInfo.do" aria-expanded="false"><!-- data-toggle="dropdown"  -->
-                       <i class="fa fa-user fa-fw"></i>${user.email }
+                       <i class="fa fa-user fa-fw"></i>${user.username }
                     </a>
                 </li>
                 <li class="dropdown">
@@ -158,7 +158,7 @@ request.setAttribute("basePath", basePath);
     <!-- JS Scripts-->
     <script src="js/communityManager.js"></script> 
     <!-- Bootstrap Js -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.js"></script>
     <!-- Metis Menu Js -->
     <script src="js/jquery.metisMenu.js"></script>
     <!-- Morris Chart Js -->
