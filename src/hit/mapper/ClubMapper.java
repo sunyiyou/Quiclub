@@ -40,4 +40,8 @@ public interface ClubMapper {
     Role getUserRoleInClub(ClubMember clubMember);
     
     List<Club> getClubsByUser(Integer userId);
+    
+    void updateUserClubScore(ClubMember clubMember);
+    
+    Integer calcTotalRequest();
 }

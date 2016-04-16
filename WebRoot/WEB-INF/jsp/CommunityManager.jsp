@@ -83,16 +83,19 @@ request.setAttribute("basePath", basePath);
         </nav>
         <!--/. NAV TOP  -->
         <nav class="navbar-default navbar-side" role="navigation">
-            <div class="sidebar-collapse">
+            <div class="sidebar-collapse">   
                 <ul class="nav" id="main-menu">
                     <li>
                         <a class="active-menu" href="javascript:void(0);" id="personInfo"><i class="fa fa-dashboard"></i>社团主页</a>
                     </li>
                     <li>
-                        <a href="javascript:void(0);" menu_id="12" class="menu" id="confirm"><i class="fa fa-desktop"></i>社团信息12</a>
+                        <a href="javascript:void(0);" menu_id="12" class="menu" id="clubmessage"><i class="fa fa-desktop"></i>社团信息12</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" menu_id="16" class="menu" id="clubmember"><i class="fa fa-desktop"></i>社团成员16</a>
                     </li>
 					<li>
-                        <a href="javascript:void(0);" menu_id="14" class="menu"  id="myCommunity"><i class="fa fa-bar-chart-o"></i>
+                        <a href="javascript:void(0);" menu_id="14" class="menu"  id="communityNews"><i class="fa fa-bar-chart-o"></i>
                             社团日志14</a>
                     </li>
                     <li>
@@ -135,7 +138,7 @@ request.setAttribute("basePath", basePath);
                                 <a href="javascript:void(0);" menu_id="9" class="menu" id="distributeActivity">分配活动9</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" menu_id="10" class="menu">编辑活动状态10</a>
+                                <a href="javascript:void(0);" menu_id="10" class="menu" id="evaluateActivity">编辑活动状态10</a>
                             </li>
                         </ul>
                     </li>

@@ -100,6 +100,7 @@ public class ClubServiceImpl extends BaseDao implements ClubService {
 		  ClubMember clubMember = new ClubMember(user_id, club_id, role_id);
 		  clubMapper.addClubMember(clubMember);
 		  clubMapper.deleteClubRequest(clubMember);
+		  //send agree email
 	}
    @Override
 	public Role getUserRoleInClub(Integer userId, Integer clubId) {
@@ -109,4 +110,14 @@ public class ClubServiceImpl extends BaseDao implements ClubService {
 	public List<Club> getClubsByUser(Integer user_id) {
 	     return clubMapper.getClubsByUser(user_id);
 	}
+   @Override
+   public void rejectRequest(Integer user_id, Integer club_id) {
+		  ClubMember clubMember = new ClubMember(user_id, club_id, 0);
+		  clubMapper.deleteClubRequest(clubMember);
+		  //send reject email
+   }
+   @Override
+	public Integer calcTotalRequest() {
+		return clubMapper.calcTotalRequest();
+   }
 }

@@ -14,6 +14,7 @@ import hit.po.User;
 import hit.service.ClubService;
 import hit.service.TaskService;
 import hit.service.UserService;
+import hit.service.exception.TaskException;
 import hit.vo.EventVo;
 
 import java.text.SimpleDateFormat;
@@ -159,6 +160,54 @@ public class TaskController{
 	   
 	   return "jsp/editactivity";
    }
+   /**
+    * @author sunyiyou
+    * @param request
+    * @return forward: evaluateactivity.jsp
+    */
+   @RequestMapping(value="evaluateactivity.do",method={RequestMethod.GET})
+   public String evaluateactivity(HttpServletRequest request){
+	   loadIds(request);
+	   List<EventVo> events = taskService.getAllTaskAdmin(club_id, user_id);
+	   request.setAttribute("events",events);
+	   return "jsp/evaluateactivity";
+   }
+   /**
+    * @author sunyiyou
+    * @param request
+    * @return  List<User> ptcs
+    */
+   @RequestMapping(value="getTaskParticipator.do",method={RequestMethod.GET})
+   public @ResponseBody List<User> getTaskParticipator(HttpServletRequest request,Integer task_id){
+	   loadIds(request);
+	   List<User> ptcs = taskService.getTaskPtcs(task_id);
+	   return ptcs;
+   }
+   /**
+    * @author sunyiyou
+    * @param request
+    * @param task_id
+    * @param scores
+    * @return
+    */
+   @RequestMapping(value="submitEvaAct.do",method={RequestMethod.GET})
+   public @ResponseBody String submitEvaAct(HttpServletRequest request,Integer task_id,@RequestParam(defaultValue="0") Integer[] scores){
+	   loadIds(request);
+	   try {
+		taskService.updateUserScores(club_id, task_id, scores);
+	} catch (TaskException e) {
+		return "the score your delegeate is not consistent with the total score of this task!";
+	}
+	   return "success";
+   }
+//   
+//   @RequestMapping(value="evaluateactivity.do",method={RequestMethod.GET})
+//   public String get(HttpServletRequest request){
+//	   loadIds(request);
+//	   
+//	   return "jsp/evaluateactivity";
+//   }
+   
 
 	
 }

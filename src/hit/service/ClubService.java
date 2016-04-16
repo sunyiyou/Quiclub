@@ -32,4 +32,6 @@ public interface ClubService {
 	public void addClubMember(Integer user_id,Integer club_id,Integer role_id);
 	public Role getUserRoleInClub(Integer userId,Integer clubId);
 	public List<Club> getClubsByUser(Integer user_id);
+	public void rejectRequest(Integer user_id,Integer club_id);
+	public Integer calcTotalRequest();
 }
