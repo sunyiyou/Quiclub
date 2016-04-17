@@ -30,8 +30,20 @@ public class User {
     private String schoolname;
 
     private String scholar;
+    
+    private String keyCode;
+    
+    
+    
+    public String getKeyCode() {
+		return keyCode;
+	}
 
-    public Integer getUserId() {
+	public void setKeyCode(String keyCode) {
+		this.keyCode = keyCode;
+	}
+
+	public Integer getUserId() {
         return userId;
     }
 

@@ -11,12 +11,6 @@
 			
 	</insert>
  	
-	<update id="updateUser" parameterClass="User" >
-			update user set username=#username#,phone=#phone# ,province=#province#,sch_id=#schId#,
-				institute=#institute#,validationState=#validationstate#,major=#major#,time=#time#,sex=#sex#,
-				schoolname=#schoolname#, image=#image# where email = #email#
-	</update>
-	
 	<select id="login"  resultClass="User"  parameterClass="java.util.Map">
   			  SELECT U.* FROM user U   WHERE email=#email# AND password=#password#
   	</select>
@@ -24,6 +18,15 @@
   	
   	<select id="findSchoolBySchoolName" resultClass="School" parameterClass="java.lang.String">
   			select S.*  from school S where schoolname = #schoolname#
+  	</select>
+  	
+  	<insert id="insertIntoClubRequest" parameterClass="java.util.Map">
+  			insert into club_request (club_id,user_id,requestType) values
+  							(#club_id#,#user_id#,#requestType#)
+  	</insert>
+  	
+  	<select id="judgeRequest" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+  			select requestType from club_request where club_id = #club_id# and user_id = #user_id#
   	</select>
 
 </sqlMap>

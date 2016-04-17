@@ -5,6 +5,56 @@
 		select * from user where email = #{email}
 	
 	</select>
+		
+	<update id="updateUserByEmail" parameterType="hit.po.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="validationstate != null" >
+        validationState = #{validationstate,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="schId != null" >
+        sch_id = #{schId,jdbcType=INTEGER},
+      </if>
+      <if test="major != null" >
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null" >
+        institute = #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolname != null" >
+        schoolname = #{schoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="scholar != null" >
+        scholar = #{scholar,jdbcType=VARCHAR},
+      </if>
+      <if test="keyCode != null" >
+        keyCode = #{keyCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where email = #{email,jdbcType=INTEGER}
+  </update>
+	
   <resultMap id="BaseResultMap" type="hit.po.UserCustom" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="username" property="username" jdbcType="VARCHAR" />

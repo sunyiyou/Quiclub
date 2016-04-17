@@ -1,6 +1,9 @@
 package hit.service;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import hit.po.Club;
 import hit.po.ClubMember;
@@ -11,6 +14,7 @@ import hit.po.RolePrivilege;
 import hit.po.User;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Component
@@ -33,5 +37,12 @@ public interface ClubService {
 	public Role getUserRoleInClub(Integer userId,Integer clubId);
 	public List<Club> getClubsByUser(Integer user_id);
 	public void rejectRequest(Integer user_id,Integer club_id);
-	public Integer calcTotalRequest();
+	public Integer calcTotalRequest(Integer club_id);
+	
+	public Club createClub(HttpServletRequest request, Club club, String clubname, String description, Date setuptime,
+			User user, MultipartFile clubImage);
+	public Integer queryClubidByClubnameAndUserId(String clubname,
+			Integer userId);
+	public void bindUserAndClub(Club club2, User user);
+	public List<Club> getAllClubs();
 }

@@ -43,5 +43,12 @@ public interface ClubMapper {
     
     void updateUserClubScore(ClubMember clubMember);
     
-    Integer calcTotalRequest();
+    Integer calcTotalRequest(Integer club_id);
+    
+    /**
+     * @author 作者: 如今我已·剑指天涯
+     *创建时间:2016年4月16日下午8:00:42
+     */
+	List<Club> queryAllClubs();
+    
 }

@@ -36,12 +36,12 @@ request.setAttribute("basePath", basePath);
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">LOGO</a>
+                <a class="navbar-brand" href="index.jsp">LOGO</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-left">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="index.jsp" aria-expanded="false">
                        <i class="fa fa-home fa-fw"></i>首页
                     </a>
                 </li>
@@ -93,6 +93,14 @@ request.setAttribute("basePath", basePath);
                         <a href="javascript:void(0);"  id="myCommunity"><i class="fa fa-bar-chart-o"></i>
                             我的社团</a>
                     </li>
+                     <li>
+                        <a href="javascript:void(0);"  id="createCommunity"><i class="fa fa-bar-chart-o"></i>
+                            创建社团</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);"  id="joinCommunity"><i class="fa fa-bar-chart-o"></i>
+                           加入社团</a>
+                    </li>                    
                     <li>
                         <a href="javascript:void(0);" id="myTask"><i class="fa fa-qrcode"></i> 
                             我的任务</a>
@@ -134,7 +142,7 @@ request.setAttribute("basePath", basePath);
                         </div>
                         <div>
                             <span>学历：</span>
-                            <div class="inner-div">本科</div>
+                            <div class="inner-div"><c:out value="${sessionScope.user.scholar }"></c:out></div>
                         </div>
                         <div>
                             <span>入学时间：</span>
