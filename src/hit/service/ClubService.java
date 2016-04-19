@@ -1,17 +1,18 @@
 package hit.service;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import hit.po.Club;
 import hit.po.ClubMember;
 import hit.po.ClubMemberRequest;
 import hit.po.Menu;
+import hit.po.News;
 import hit.po.Role;
 import hit.po.RolePrivilege;
 import hit.po.User;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,4 +46,21 @@ public interface ClubService {
 			Integer userId);
 	public void bindUserAndClub(Club club2, User user);
 	public List<Club> getAllClubs();
+
+	/**
+	 * 
+	 * @author 作者: 如今我已·剑指天涯
+	 * @Description:发布新闻，新闻入库
+	 *创建时间:2016年4月17日下午10:09:54
+	 */
+	public News addNews(String title, String blob, Integer user_id,
+			Integer club_id);
+	/**
+	 * 通过一系列参数查询新闻id
+	 * @author 作者: 如今我已·剑指天涯
+	 *创建时间:2016年4月17日下午10:35:37
+	 * @param date 
+	 */
+	public Integer queryNewsIdByTitleAndUser(String title, Integer user_id,
+			Integer club_id);
 }

@@ -14,7 +14,21 @@
 	$("#clubmember").bind("click",function() {
 		loadPage("/clubmember.do");
 	});
+	//社团日志发布
+	$("#communityNewsPublish").bind("click",function() {
+		loadPage("/toPublishNews.do");
+	});
 	
+	
+	//社团日志编辑
+	$("#communityNewsEdit").bind("click",function() {
+		loadPage("/toEditNews.do");
+	});
+	
+	//社团日志删除
+	$("#communityNewsDelete").bind("click",function() {
+		loadPage("/toDeleteNews.do");
+	});
 	// 我的社团页面
 	$("#myCommunity").bind("click",function() {
 		$("#page-inner").load("myCommunity.html");

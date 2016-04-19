@@ -2,16 +2,17 @@ package hit.controller;
 /**
  * 用户模块控制器
  */
-import hit.mapper.ClubMapper;
-import hit.mapper.RoleMapper;
 import hit.po.Club;
 import hit.po.ClubMember;
 import hit.po.ClubMemberRequest;
 import hit.po.Menu;
+import hit.po.News;
+import hit.po.NewsCustom;
 import hit.po.Role;
 import hit.po.RolePrivilege;
 import hit.po.User;
 import hit.service.ClubService;
+import hit.service.NewsService;
 import hit.service.UserService;
 
 import java.text.SimpleDateFormat;
@@ -19,12 +20,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +36,13 @@ public class ClubController{
 	private ClubService clubService;
    @Autowired
    private UserService userService;
+   @Autowired
+   private NewsService newsService;
 
+   //用来存储所有新闻的集合,用于显示到jsp上的
+   private List<NewsCustom> newsList = new ArrayList<NewsCustom>();
+
+   private List<News> newsSimpleList = new ArrayList<News>();
 
    //用来存储用户所加入的俱乐部
    private List<Club> clubs = new ArrayList<Club>();
@@ -247,10 +252,43 @@ public class ClubController{
 		return "jsp/adjustclubrole";
 	}
 	
-	
+	/**
+	 * 
+	 * @author 作者: 如今我已·剑指天涯
+	 * @Description:这是获取该社团的所有新闻
+	 *创建时间:2016年4月18日上午1:05:49
+	 */
 	@RequestMapping(value="clubnews.do",method={RequestMethod.GET})
 	public String clubnews(HttpServletRequest request){
-		return "jsp/clubnews";
+		loadIds(request);
+		newsSimpleList = newsService.getAllNews(club_id);
+		if(newsSimpleList != null){
+			newsList.clear();//清空集合
+			for( News news  : newsSimpleList){
+					NewsCustom nc = new NewsCustom();//每遍历一次都创建一个NewsCustom
+					nc.setAuthor(userService.getUserById(user_id).getUsername());
+					nc.setClubId(news.getClubId());
+					nc.setNewId(news.getNewId());
+					nc.setTitle(news.getTitle());
+					System.out.println(news.getSummary()+"我就想看看他是什么格式");
+					nc.setNewsSummary(new String(news.getSummary()));//转换成string存储进去
+					request.setAttribute("summary", news.getSummary());
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					String formatDate = format.format(news.getTime());
+					nc.setNewsTime(formatDate);
+					nc.setSummary(news.getSummary());
+					nc.setPublisherId(user_id);
+					newsList.add(nc);//这也添加了啊
+			}
+			request.removeAttribute("newsList");
+			request.setAttribute("newsList", newsList);
+			return "jsp/communityNews";
+			
+		}else{
+			System.out.println("该社团已经没有新闻啦");
+			request.setAttribute("error", "你的社团已经没有新闻啦，快去创建一个吧");
+			return "jsp/error";//这个界面 
+		}
 	}
 	
 	/**
@@ -427,8 +465,70 @@ public class ClubController{
 		request.getSession().setAttribute("user_id", user.getUserId());
 		//调用service层绑定user和Club的方法
 		clubService.bindUserAndClub(club2,user);
-	
+		//this 这是新建社团的时候系统自动存储的一条日志
+		clubService.addNews(clubname+"建立", clubname+"已经建立完成啦，希望在"+user.getUsername()+"的带领下社团能越办越红火", user.getUserId(), clubId);
 		return "successCreate";
 	}
 	
+	
+
+	
+	
+	/**
+	 * 
+	 * @author 作者: 如今我已·剑指天涯
+	 * @Description:发布新闻的方法，入库
+	 *创建时间:2016年4月17日下午10:04:01
+	 */
+	@RequestMapping(value="/publishNews.do")
+	public  String publishNews(HttpServletRequest request,
+			@RequestParam(defaultValue="") String title,
+			@RequestParam(defaultValue="") String blob ) {
+		loadIds(request);
+		News news = clubService.addNews(title,blob,user_id,club_id);//返回 
+		Integer newsId = clubService.queryNewsIdByTitleAndUser(title,user_id,club_id);
+		news.setNewId(newsId);//将查询出来的newsid存储到new对象中
+		System.out.println("新发布的新闻“”这是后台发过来的新闻"+blob);
+		NewsCustom nc = new NewsCustom();
+		SimpleDateFormat format = new SimpleDateFormat();
+		String formateDate = format.format(news.getTime());
+		/*nc.setAuthor();*/
+		nc.setAuthor(userService.getUserById(user_id).getUsername());
+		nc.setTitle(title);
+		nc.setClubId(club_id);
+		nc.setPublisherId(user_id);
+		nc.setNewsSummary(blob);
+		nc.setNewId(news.getNewId());
+		nc.setSummary(blob.getBytes());
+		newsList.add(nc);//将新闻Custom类添加到集合中
+		request.setAttribute("newsList", newsList);
+		User user = userService.getUserById(user_id);
+		request.setAttribute("user",user);
+		System.out.println("现在再获取到新闻的id"+news.getNewId());
+		if (newsId!=null) {
+			return "jsp/communityNews";
+		}else {
+			return "error";
+		}
+	}
+	
+	
+	/**
+	 * @author 作者: 如今我已·剑指天涯
+	 * @return
+	 */
+	@RequestMapping(value="/toNewsPage.do")
+	public String toNewsPage(HttpServletRequest request,Integer news_id) {
+		News news = newsService.getNewsById(news_id);
+		SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String time = sFormat.format(news.getTime());
+		/*nc.setAuthor();*/
+		String author = userService.getUserById(news.getPublisherId()).getUsername();
+		String summary = new String(news.getSummary());
+		request.setAttribute("news", news);
+		request.setAttribute("author",author);
+		request.setAttribute("summary",summary);
+		request.setAttribute("time", time);
+		return "jsp/showNews";
+	}
 }
